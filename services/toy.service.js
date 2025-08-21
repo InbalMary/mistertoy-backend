@@ -15,13 +15,32 @@ const toys = utilService.readJsonFile('data/toy.json')
 
 function query(filterBy = { txt: '' }) {
     const regex = new RegExp(filterBy.txt, 'i')
-    var toysToReturn = toys.filter(toy => regex.test(toy.vendor))
+    var toysToReturn = toys.filter(toy => regex.test(toy.name))
 
-    if (filterBy.minSpeed) {
-        toysToReturn = toysToReturn.filter(toy => toy.speed >= filterBy.minSpeed)
+    if (filterBy.price !== undefined) {
+        toysToReturn = toysToReturn.filter(toy => toy.price <= filterBy.price)
     }
-    if (filterBy.maxPrice) {
-        toysToReturn = toysToReturn.filter(toy => toy.price <= filterBy.maxPrice)
+
+    if (filterBy.inStock === 'true') {
+        toysToReturn = toysToReturn.filter(toy => toy.inStock === true)
+    } else if (filterBy.inStock === 'false') {
+        toysToReturn = toysToReturn.filter(toy => toy.inStock === false)
+    }
+
+    if (filterBy.labels && filterBy.labels.length > 0) {
+        toysToReturn = toysToReturn.filter(toy =>
+            filterBy.labels.every(label => toy.labels.includes(label))
+        )
+    }
+
+    if (filterBy.sort) {
+        if (filterBy.sort === 'name') {
+            toysToReturn = toysToReturn.sort((a, b) => a.name.localeCompare(b.name))
+        } else if (filterBy.sort === 'price') {
+            toysToReturn = toysToReturn.sort((a, b) => a.price - b.price)
+        } else if (filterBy.sort === 'createdAt') {
+            toysToReturn = toysToReturn.sort((a, b) => a.createdAt - b.createdAt)
+        }
     }
 
     if (filterBy.pageIdx !== undefined) {

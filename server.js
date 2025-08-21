@@ -31,9 +31,10 @@ app.set('query parser', 'extended')
 app.get('/api/toy', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
-        minSpeed: +req.query.minSpeed || 0,
-        maxPrice: +req.query.maxPrice || 0,
-        pageIdx: req.query.pageIdx || undefined,
+        price: req.query.price ? +req.query.price : Infinity,
+        inStock: req.query.inStock, 
+        labels: req.query.labels ? req.query.labels.split(',') : [],
+        sort: req.query.sort || ''
     }
     toyService.query(filterBy)
         .then(toys => res.send(toys))
@@ -59,9 +60,17 @@ app.post('/api/toy', (req, res) => {
     if (!loggedinUser) return res.status(401).send('Cannot add toy')
 
     const toy = {
-        vendor: req.body.vendor,
-        price: +req.body.price,
-        speed: +req.body.speed,
+        name: req.body.name || 'New Toy',
+        imgUrl: req.body.imgUrl || `https://robohash.org/${Math.random()}`,
+        price: +req.body.price || 0,
+        labels: req.body.labels || [],
+        createdAt: req.body.createdAt || Date.now(),
+        inStock: req.body.inStock !== undefined ? req.body.inStock : true,
+        owner: {
+            _id: loggedinUser._id,
+            fullname: loggedinUser.fullname,
+            score: loggedinUser.score || 0
+        }
     }
     toyService.save(toy, loggedinUser)
         .then(savedToy => res.send(savedToy))
@@ -77,10 +86,19 @@ app.put('/api/toy/:id', (req, res) => {
 
     const toy = {
         _id: req.params.id,
-        vendor: req.body.vendor,
-        price: +req.body.price,
-        speed: +req.body.speed,
+        name: req.body.name || 'Updated Toy',
+        imgUrl: req.body.imgUrl || `https://robohash.org/${Math.random()}`,
+        price: +req.body.price || 0,
+        labels: req.body.labels || [],
+        createdAt: req.body.createdAt || Date.now(),
+        inStock: req.body.inStock !== undefined ? req.body.inStock : true,
+        owner: req.body.owner || {
+            _id: loggedinUser._id,
+            fullname: loggedinUser.fullname,
+            score: loggedinUser.score || 0
+        }
     }
+
     toyService.save(toy, loggedinUser)
         .then(savedToy => res.send(savedToy))
         .catch(err => {

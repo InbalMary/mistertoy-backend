@@ -222,19 +222,10 @@
     "createdAt": 1755781430321,
     "inStock": true,
     "owner": {
-      "_id": "h76fB",
-      "fullname": "muki",
+      "_id": "u101",
+      "fullname": "Puki Ja",
       "score": 10000
     },
     "_id": "SKe1s"
-  },
-  {
-    "price": 354,
-    "speed": null,
-    "_id": "lzwdX",
-    "owner": {
-      "_id": "TXR71",
-      "fullname": "Shuki shuk"
-    }
   }
 ]
