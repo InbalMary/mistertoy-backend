@@ -227,5 +227,39 @@
       "score": 10000
     },
     "_id": "SKe1s"
+  },
+  {
+    "name": "Drum Set",
+    "imgUrl": "https://robohash.org/43CkZs",
+    "price": 262,
+    "labels": [
+      "Baby",
+      "Puzzle",
+      "On wheels"
+    ],
+    "createdAt": 1755802936538,
+    "inStock": true,
+    "owner": {
+      "_id": "6pO3B",
+      "fullname": "tt"
+    },
+    "_id": "jVyXu"
+  },
+  {
+    "name": "Racing Car",
+    "imgUrl": "https://robohash.org/9iTPaX",
+    "price": 103,
+    "labels": [
+      "Doll",
+      "Outdoor",
+      "On wheels"
+    ],
+    "createdAt": 1755803286770,
+    "inStock": true,
+    "owner": {
+      "_id": "6pO3B",
+      "fullname": "tt"
+    },
+    "_id": "ZMjYQ"
   }
 ]
