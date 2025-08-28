@@ -74,20 +74,25 @@ function remove(toyId, loggedinUser) {
 function save(toy, loggedinUser) {
     if (toy._id) {
         const toyToUpdate = toys.find(currToy => currToy._id === toy._id)
+        if (!toyToUpdate) return Promise.reject('Toy not found')
         if (!loggedinUser.isAdmin &&
             toyToUpdate.owner._id !== loggedinUser._id) {
             return Promise.reject('Not your toy')
         }
-        toyToUpdate.vendor = toy.vendor
-        toyToUpdate.speed = toy.speed
+        toyToUpdate.name = toy.name
+        toyToUpdate.imgUrl = toy.imgUrl
         toyToUpdate.price = toy.price
+        toyToUpdate.labels = toy.labels
+        toyToUpdate.inStock = toy.inStock
+
         toy = toyToUpdate
     } else {
         toy._id = utilService.makeId()
+        toy.createdAt = Date.now()
         toy.owner = loggedinUser
         toys.push(toy)
     }
-    delete toy.owner.score
+    if (toy.owner) delete toy.owner.score
     return _saveToysToFile().then(() => toy)
 }
 
