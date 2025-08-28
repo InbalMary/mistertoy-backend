@@ -9,7 +9,8 @@ export const toyService = {
     remove,
     save,
     getLabels,
-    getPricesPerLabel
+    getPricesPerLabel,
+    getInventoryByLabel
 }
 
 const PAGE_SIZE = 5
@@ -130,6 +131,34 @@ function getPricesPerLabel() {
 
     return Promise.resolve(pricesMap)
 }
+
+function getInventoryByLabel() {
+    const labelCounts = {}
+    const labelInStockCounts = {}
+    toys.forEach(toy => {
+        if (!Array.isArray(toy.labels)) return
+        toy.labels.forEach(label => {
+            labelCounts[label] = (labelCounts[label] || 0) + 1
+            if (toy.inStock === true || toy.inStock === 'true') {
+                labelInStockCounts[label] = (labelInStockCounts[label] || 0) + 1
+            }
+        })
+    })
+    const result = {}
+    for (const label in labelCounts) {
+        const total = labelCounts[label]
+        const inStock = labelInStockCounts[label] || 0
+        const percent = +((inStock / total) * 100).toFixed(2)
+
+        result[label] = {
+            total,
+            inStock,
+            percent
+        }
+    }
+    return Promise.resolve(result)
+}
+
 
 
 function _saveToysToFile() {

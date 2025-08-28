@@ -62,6 +62,16 @@ app.get('/api/toy/prices-per-label', (req, res) => {
         })
 })
 
+app.get('/api/toy/inventory-by-label', (req, res) => {
+    toyService.getInventoryByLabel()
+        .then(inventoryMap => res.send(inventoryMap))
+        .catch(err => {
+            loggerService.error('Cannot get inventory by label', err)
+            res.status(500).send('Cannot get inventory by label')
+        })
+})
+
+
 app.get('/api/toy/:toyId', (req, res) => {
     const { toyId } = req.params
 
