@@ -261,5 +261,57 @@
       "fullname": "tt"
     },
     "_id": "ZMjYQ"
+  },
+  {
+    "name": "Truck drive",
+    "imgUrl": "https://robohash.org/r01dwP",
+    "price": 222,
+    "labels": [
+      "On wheels",
+      "Art",
+      "Battery Powered"
+    ],
+    "createdAt": 1756295262473,
+    "inStock": true,
+    "owner": {
+      "_id": "MowrY",
+      "fullname": "muki"
+    },
+    "_id": "oEsl0"
+  },
+  {
+    "name": "Racing Car",
+    "imgUrl": "https://robohash.org/QT3tFF",
+    "price": 53,
+    "labels": [
+      "Puzzle",
+      "On wheels",
+      "Outdoor",
+      "Art"
+    ],
+    "createdAt": 1756316234066,
+    "inStock": true,
+    "owner": {
+      "_id": "MowrY",
+      "fullname": "muki"
+    },
+    "_id": "w8UW7"
+  },
+  {
+    "name": "Cars Puzzle",
+    "imgUrl": "https://robohash.org/EmWFYl",
+    "price": 333,
+    "labels": [
+      "On wheels",
+      "Baby",
+      "Puzzle"
+    ],
+    "createdAt": 1756316236543,
+    "inStock": true,
+    "owner": {
+      "_id": "MowrY",
+      "fullname": "muki"
+    },
+    "_id": "bgV8Q"
   }
 ]

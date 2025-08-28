@@ -7,7 +7,9 @@ export const toyService = {
     query,
     getById,
     remove,
-    save
+    save,
+    getLabels,
+    getPricesPerLabel
 }
 
 const PAGE_SIZE = 5
@@ -86,6 +88,47 @@ function save(toy, loggedinUser) {
     }
     delete toy.owner.score
     return _saveToysToFile().then(() => toy)
+}
+
+function getLabels() {
+    const uniqueLabels = []
+    toys.forEach(toy => {
+        if (Array.isArray(toy.labels)) {
+            toy.labels.forEach(label => {
+                if (!uniqueLabels.includes(label)) {
+                    uniqueLabels.push(label)
+                }
+            })
+        }
+    })
+
+    return Promise.resolve(uniqueLabels)
+}
+
+function getPricesPerLabel() {
+    const pricesMap = {}
+
+    toys.forEach(toy => {
+        if (!Array.isArray(toy.labels)) return
+
+        toy.labels.forEach(label => {
+            if (!pricesMap[label]) {
+                pricesMap[label] = {
+                    prices: [],
+                    avgPrice: 0
+                }
+            }
+            pricesMap[label].prices.push(toy.price)
+        })
+    })
+
+    for (const label in pricesMap) {
+        const prices = pricesMap[label].prices
+        const avg = prices.reduce((sum, p) => sum + p, 0) / prices.length
+        pricesMap[label].avgPrice = +avg.toFixed(2)
+    }
+
+    return Promise.resolve(pricesMap)
 }
 
 

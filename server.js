@@ -44,6 +44,24 @@ app.get('/api/toy', (req, res) => {
         })
 })
 
+app.get('/api/toy/labels', (req, res) => {
+    toyService.getLabels()
+        .then(labels => res.send(labels))
+        .catch(err => {
+            loggerService.error('Cannot get labels', err)
+            res.status(500).send('Cannot get labels')
+        })
+})
+
+app.get('/api/toy/prices-per-label', (req, res) => {
+    toyService.getPricesPerLabel()
+        .then(pricesMap => res.send(pricesMap))
+        .catch(err => {
+            loggerService.error('Cannot get prices per label', err)
+            res.status(500).send('Cannot get prices per label')
+        })
+})
+
 app.get('/api/toy/:toyId', (req, res) => {
     const { toyId } = req.params
 
