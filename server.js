@@ -53,6 +53,15 @@ app.get('/api/toy/labels', (req, res) => {
         })
 })
 
+app.get('/api/toy/stats-per-label', (req, res) => {
+    toyService.getLabelStats()
+        .then(statsMap => res.send(statsMap))
+        .catch(err => {
+            loggerService.error('Cannot get stats per label', err)
+            res.status(500).send('Cannot get stats per label')
+        })
+})
+
 app.get('/api/toy/prices-per-label', (req, res) => {
     toyService.getPricesPerLabel()
         .then(pricesMap => res.send(pricesMap))
